@@ -7,15 +7,22 @@ jest.mock("./CalendarHeaderDays", () => {
   };
 });
 
+jest.mock("./CalendarBody", () => {
+  return function MockCalendarBody() {
+    return <div>CalendarBody Component</div>;
+  };
+});
 
 describe("Calendar", () => {
   describe("Rendering", () => {
     test("should render the component", () => {
       render(<Calendar />);
 
-      const title = screen.getByText(/CalendarHeader Component/i);
+      const header = screen.getByText(/CalendarHeader Component/i);
+      const body = screen.getByText(/CalendarBody Component/i);
 
-      expect(title).toBeInTheDocument();
+      expect(header).toBeInTheDocument();
+      expect(body).toBeInTheDocument();
     });
   });
 });
