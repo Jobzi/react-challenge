@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import CalendarHeaderDays from "./CalendarHeader";
+import CalendarHeaderDays from "./CalendarHeaderDays";
 
 const EXPECTED_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 

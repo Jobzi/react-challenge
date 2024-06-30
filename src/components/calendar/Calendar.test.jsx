@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Calendar from "./Calendar";
 
-jest.mock("./CalendarHeader", () => {
+jest.mock("./CalendarHeaderDays", () => {
   return function MockCalendarHeader() {
     return <div>CalendarHeader Component</div>;
   };
