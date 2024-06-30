@@ -1,5 +1,12 @@
+import CalendarHeaderDays from "./CalendarHeader";
+import "./styles.css";
+
 function Calendar() {
-  return <h1>Calendar Component</h1>;
+  return (
+    <div className="calendar">
+      <CalendarHeaderDays />
+    </div>
+  );
 }
 
 export default Calendar;
