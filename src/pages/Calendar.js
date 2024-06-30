@@ -1,13 +1,7 @@
-import React from 'react';
+import Calendar from "../components/calendar/Calendar";
 
-function Calendar(props) {
-  // your calendar implementation Goes here!
-  // Be creative 
-  return (
-    <div className="container">
-        <h1>Calendar</h1>
-    </div>
-  )
+function CalendarView() {
+  return <Calendar />;
 }
 
-export default Calendar;
+export default CalendarView;
