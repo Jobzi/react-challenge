@@ -2,7 +2,8 @@ import { render, screen } from "@testing-library/react";
 import Calendar from "./Calendar";
 
 const mockComponents = {
-  reminderModal: jest.fn()
+  reminderModal: jest.fn(),
+  calendarBody: jest.fn()
 };
 
 jest.mock("./CalendarHeaderDays", () => {
@@ -12,7 +13,8 @@ jest.mock("./CalendarHeaderDays", () => {
 });
 
 jest.mock("./CalendarBody", () => {
-  return function MockCalendarBody() {
+  return function MockCalendarBody(props) {
+    mockComponents.calendarBody(props);
     return <div>CalendarBody Component</div>;
   };
 });
@@ -45,6 +47,16 @@ describe("Calendar", () => {
         expect.objectContaining({
           isOpen: false,
           setIsOpen: expect.any(Function)
+        })
+      );
+    });
+
+    test("should render the CalendarBody component", () => {
+      render(<Calendar />);
+
+      expect(mockComponents.calendarBody).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          onAddReminder: expect.any(Function)
         })
       );
     });

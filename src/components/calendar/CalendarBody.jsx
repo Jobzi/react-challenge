@@ -1,12 +1,12 @@
-function DayCell({ day, className, dataTestId, textStyle = "" }) {
+function DayCell({ day, className, dataTestId, textStyle = "", ...props }) {
   return (
-    <div className={className} data-testid={dataTestId}>
+    <div className={className} data-testid={dataTestId} {...props}>
       <span className={textStyle}>{day}</span>
     </div>
   );
 }
 
-function CalendarBody({ currentDate }) {
+function CalendarBody({ currentDate, onAddReminder }) {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
   const today = new Date();
@@ -48,6 +48,7 @@ function CalendarBody({ currentDate }) {
         className={`calendar-cell ${dayClass}`}
         dataTestId="day-in-month"
         textStyle={isToday ? "today" : ""}
+        onClick={() => onAddReminder(date)}
       />
     );
   });
@@ -75,7 +76,8 @@ function CalendarBody({ currentDate }) {
 }
 
 CalendarBody.defaultProps = {
-  currentDate: new Date()
+  currentDate: new Date(),
+  onAddReminder: () => {}
 };
 
 export default CalendarBody;

@@ -2,19 +2,23 @@ import React, { useState } from "react";
 import "./styles.css";
 
 const DEFAULT_FORM_STATE = {
-    text: "",
-    city: "",
-    date: "",
-    time: ""
+  text: "",
+  city: "",
+  date: "",
+  time: ""
 };
 
-const ReminderModal = ({ isOpen, setIsOpen, date = "" }) => {
-  const [form, setForm] = useState(DEFAULT_FORM_STATE);
+const ReminderModal = ({ isOpen, setIsOpen, date }) => {
+  const [form, setForm] = useState({
+    ...DEFAULT_FORM_STATE,
+    date
+  });
 
   if (!isOpen) return null;
 
   const handleClose = () => {
     setIsOpen(false);
+    setForm(DEFAULT_FORM_STATE);
   };
 
   const handleChange = (e) => {
@@ -23,6 +27,10 @@ const ReminderModal = ({ isOpen, setIsOpen, date = "" }) => {
       ...form,
       [name]: value
     });
+  };
+
+  const handleSave = () => {
+    handleClose();
   };
 
   return (
@@ -36,6 +44,7 @@ const ReminderModal = ({ isOpen, setIsOpen, date = "" }) => {
           <input
             type="text"
             id="text-input"
+            name="text"
             value={form.text}
             maxLength="30"
             onChange={handleChange}
@@ -44,19 +53,32 @@ const ReminderModal = ({ isOpen, setIsOpen, date = "" }) => {
           <input
             type="text"
             id="city-input"
+            name="city"
             value={form.city}
             onChange={handleChange}
           />
           <label htmlFor="date-input"> Date:</label>
-          <input type="date" value={form.date} onChange={handleChange} />
+          <input
+            type="date"
+            value={form.date}
+            name="date"
+            onChange={handleChange}
+          />
           <label htmlFor="date-input"> Time:</label>
-          <input type="time" value={form.time} onChange={handleChange} />
+          <input
+            type="time"
+            value={form.time}
+            name="time"
+            onChange={handleChange}
+          />
         </div>
         <div className="modal-footer">
           <button className="cancel" onClick={handleClose}>
             Cancel
           </button>
-          <button className="save">Save</button>
+          <button className="save" onClick={handleSave}>
+            Save
+          </button>
         </div>
       </div>
     </div>

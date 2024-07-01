@@ -6,11 +6,18 @@ import "./styles.css";
 
 function Calendar() {
   const [openModal, setOpenModal] = useState(false);
+  const [date, setDate] = useState("");
+  const handleAddReminder = (date) => {
+    setOpenModal(true);
+    setDate(date);
+  };
+
+
   return (
     <div className="calendar">
       <CalendarHeaderDays />
-      <CalendarBody />
-      <ReminderModal isOpen={openModal} setIsOpen={setOpenModal} />
+      <CalendarBody onAddReminder={handleAddReminder} />
+      <ReminderModal isOpen={openModal} setIsOpen={setOpenModal} date={date} />
     </div>
   );
 }

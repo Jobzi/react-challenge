@@ -2,7 +2,10 @@ import { render, screen } from "@testing-library/react";
 import CalendarBody from "./CalendarBody";
 
 // Mock Date object
-const mockDate = new Date("2024-06-01T00:00:00");
+const defaultProps = {
+  currentDate: new Date("2024-06-01T00:00:00"),
+  onAddReminder: jest.fn()
+};
 
 describe("CalendarBody", () => {
   describe("Rendering", () => {
@@ -10,7 +13,7 @@ describe("CalendarBody", () => {
       const expectedDaysInMonth = 30;
       const expectedDaysInPrevMonth = 6;
       const expectedDaysInNextMonth = 6;
-      render(<CalendarBody currentDate={mockDate} />);
+      render(<CalendarBody {...defaultProps}/>);
 
       const daysInMonth = screen.getAllByTestId("day-in-month");
       const daysInPrevMonth = screen.getAllByTestId("day-in-prev-month");
@@ -21,4 +24,17 @@ describe("CalendarBody", () => {
       expect(daysInNextMonth).toHaveLength(expectedDaysInNextMonth);
     });
   });
+
+  describe("Functionality", () => {
+    test("should call onAddReminder when clicking on a day", () => {
+      render(<CalendarBody {...defaultProps}/>);
+
+      const day = screen.getAllByTestId("day-in-month")[0];
+      day.click();
+
+      expect(defaultProps.onAddReminder).toHaveBeenCalledWith(
+        defaultProps.currentDate
+      )
+    });
+  })
 });
