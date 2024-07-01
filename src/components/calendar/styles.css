@@ -45,3 +45,27 @@
 .calendar-cell.not-current-month {
   color: #ccc;
 }
+
+.calendar-cell.weekend {
+  background-color: rgba(128, 128, 128, 0.075);
+}
+
+.calendar-cell.weekend span {
+  color: var(--calendar-main-color);
+}
+
+.calendar-cell.weekday span {
+  color: black;
+}
+
+.calendar-cell:hover {
+  background-color: #e6f7ff;
+  cursor: pointer;
+}
+
+.calendar-cell span.today {
+  background-color: var(--calendar-main-color);
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+}

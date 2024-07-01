@@ -1,8 +1,20 @@
+function DayCell({ day, className, dataTestId, textStyle = "" }) {
+  return (
+    <div className={className} data-testid={dataTestId}>
+      <span className={textStyle}>{day}</span>
+    </div>
+  );
+}
+
 function CalendarBody({ currentDate }) {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
+  const today = new Date();
+
   const startDay = new Date(year, month, 1).getDay();
   const daysInPrevMonth = new Date(year, month, 0).getDate();
+  const isCurrentMonth =
+    month === today.getMonth() && year === today.getFullYear();
 
   const daysInMonth = new Date(
     currentDate.getFullYear(),
@@ -11,22 +23,46 @@ function CalendarBody({ currentDate }) {
   ).getDate();
 
   const prevMonthDays = Array.from({ length: startDay }, (_, i) => (
-    <div key={`prev-${i}`} className="calendar-cell not-current-month" data-testid="day-in-prev-month">
-      <span>{daysInPrevMonth - i}</span>
-    </div>
+    <DayCell
+      key={`prev-${i}`}
+      day={daysInPrevMonth - i}
+      className="calendar-cell not-current-month"
+      dataTestId="day-in-prev-month"
+    />
   )).reverse();
 
-  const currentMonthDays = Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => (
-    <div key={day} className="calendar-cell" data-testid="day-in-month">
-      <span>{day}</span>
-    </div>
-  ));
+  const currentMonthDays = Array.from(
+    { length: daysInMonth },
+    (_, i) => i + 1
+  ).map((day) => {
+    const [saturday, sunday] = [0, 6];
+    const isToday = isCurrentMonth && day === today.getDate();
+    const date = new Date(year, month, day);
+    const isWeekend = [saturday, sunday].includes(date.getDay());
+    const dayClass = isWeekend ? "weekend" : "weekday";
+
+    return (
+      <DayCell
+        key={day}
+        day={day}
+        className={`calendar-cell ${dayClass}`}
+        dataTestId="day-in-month"
+        textStyle={isToday ? "today" : ""}
+      />
+    );
+  });
 
   const totalDays = 42;
-  const nextMonthDays = Array.from({ length: totalDays - (daysInMonth + startDay) }, (_, i) => i + 1).map((day) => (
-    <div key={`next-${day}`} className="calendar-cell not-current-month" data-testid="day-in-next-month">
-      <span>{day}</span>
-    </div>
+  const nextMonthDays = Array.from(
+    { length: totalDays - (daysInMonth + startDay) },
+    (_, i) => i + 1
+  ).map((day) => (
+    <DayCell
+      key={`next-${day}`}
+      day={day}
+      className="calendar-cell not-current-month"
+      dataTestId="day-in-next-month"
+    />
   ));
 
   return (
