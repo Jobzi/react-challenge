@@ -41,3 +41,7 @@
   border: 1px solid #ddd;
   box-sizing: border-box;
 }
+
+.calendar-cell.not-current-month {
+  color: #ccc;
+}

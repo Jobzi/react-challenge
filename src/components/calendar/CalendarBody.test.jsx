@@ -8,11 +8,17 @@ describe("CalendarBody", () => {
   describe("Rendering", () => {
     test("should render the component", () => {
       const expectedDaysInMonth = 30;
+      const expectedDaysInPrevMonth = 6;
+      const expectedDaysInNextMonth = 6;
       render(<CalendarBody currentDate={mockDate} />);
 
-      for (let day = 1; day <= expectedDaysInMonth; day++) {
-        expect(screen.getByText(day)).toBeInTheDocument();
-      }
+      const daysInMonth = screen.getAllByTestId("day-in-month");
+      const daysInPrevMonth = screen.getAllByTestId("day-in-prev-month");
+      const daysInNextMonth = screen.getAllByTestId("day-in-next-month");
+
+      expect(daysInMonth).toHaveLength(expectedDaysInMonth);
+      expect(daysInPrevMonth).toHaveLength(expectedDaysInPrevMonth);
+      expect(daysInNextMonth).toHaveLength(expectedDaysInNextMonth);
     });
   });
 });
