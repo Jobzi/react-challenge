@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-const ReminderModal = ({ isOpen, setIsOpen, date = "" }) => {
-  const [form, setForm] = useState({
+const DEFAULT_FORM_STATE = {
     text: "",
     city: "",
     date: "",
     time: ""
-  });
+};
+
+const ReminderModal = ({ isOpen, setIsOpen, date = "" }) => {
+  const [form, setForm] = useState(DEFAULT_FORM_STATE);
 
   if (!isOpen) return null;
 
